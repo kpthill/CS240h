@@ -66,7 +66,12 @@ numhashes cnt maxCnt space
         
 main = do
   paths <- getArgs
-  s <- loop paths ""
+  s <-if length paths == 0
+      then do
+        putStrLn "type text all in one line, then hit return:"
+        getLine
+      else do
+        loop paths ""
   map toLower s |> makeHistogram |> makePicture |> putStr
     where
       loop :: [String] -> String -> IO String
